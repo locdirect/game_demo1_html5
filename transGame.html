@@ -120,7 +120,8 @@ var g_sounds = {
 		clips: ['./audio/shoot1'],
 		sfx: [],
 		cursor: 0
-	}
+	},
+	music: new buzz.sound('./audio/DST-Canopy', { formats: [ 'ogg', 'mp3' ] })
 };
 
 // Initialize everything when the window finishes loading
@@ -234,6 +235,9 @@ function initGame() {
 			g_sounds.hit.sfx[i].push(new buzz.sound(g_sounds.hit.clips[j], { formats: [ 'wav', 'ogg'] }));
 		}
 	}
+	
+	g_sounds.music.setVolume(30);
+	g_sounds.music.play().loop();
 	
 	// keyboard handler
 	$(document).bind('keypress', function(evt) {
