@@ -110,7 +110,7 @@ var g_shipPos = { left: 0, top: 0 };
 var g_overlayY = 0;
 
 var g_sounds = {
-	destroy: new Audio('./audio/pong1.wav'),
+	destroy: new buzz.sound('./audio/pong1', { formats: [ 'wav', 'ogg'] }),
 	hit: {
 		clips: ['./audio/ping1', './audio/ping2', './audio/ping3'],
 		sfx: [],
