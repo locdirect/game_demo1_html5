@@ -1,0 +1,569 @@
+<html>
+	<head>
+		<script type="text/javascript" src="./includes/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="./includes/buzz.js"></script>
+		
+		<link href="./flags.css" rel="stylesheet">
+		
+		<style>
+			div.gameWord {
+				position: absolute;
+				display: none;
+				text-transform: lowercase;
+				color: blue;
+			}
+
+			div.gameWordOrig {
+				color: white;
+			}
+			
+			div.gameWordOver {
+				color: red;
+			}
+
+			span.scoreText {
+				position: absolute;
+				display: none;
+				font-size: 0.9em;
+				color: #F7CE00;
+			}
+			
+			#divTotalScore {
+				position: absolute;
+				font-size: 1.6em;
+			}
+			
+			#divOverlay {
+				background: blue;
+				position: absolute;
+			}
+			
+			#divGameOver {
+				display: none;
+				font-size: 2.2em;
+				position: absolute;
+				text-align: center;
+				z-index: 1000;
+				color: #F7CE00;
+			}
+			
+			#divGameArea {
+				width:300px; 
+				height: 600px;
+				border: 2px solid; 
+				border-radius: 12px; 
+				position: absolute;			
+				overflow: hidden;
+				visibility: hidden;
+			}
+			
+			body {
+				font-family: Arial;
+				font-weight: bold;
+			}
+		</style>
+		
+		<script>
+
+var g_GAMEDEFS = {
+	spawnRate: 0.007,
+	wordSpeed: 0.4,
+	projSpeed: 7,
+	gravity: 0.07,
+	knockback: 1,
+	scoreWord: 100,
+	overlayOrigin: 0.1,
+	overlayMove: 10,
+	stuckTime: 400, 
+	origLang: 'frFR',
+	letterWidth: 7,
+	timeShowScore: 2000,
+	langFile: 'https://s3.amazonaws.com/primary-domain-dom0/builds/dom0/com13/prj23/doc267/D672212A7DD27C4179C76A7DB98B78CF/strings_enUS.json'
+};		
+		
+var g_projCache = {
+	projectiles: [],
+	cursor: 0
+};
+var g_wordCache = {
+	words: [],
+	cursor: 0
+};		
+var g_scoreCache = {
+	texts: [],
+	cursor: 0
+};		
+var g_translations = {
+	enUS: {
+		index: 0,
+		UI: {},
+		words: []
+	},
+	identifierIndex: 0
+};
+var g_score = 0;
+var g_wordLang = g_GAMEDEFS.origLang;
+var g_uiLang = 'enUS';
+var g_activeWord = undefined;
+var g_gamePos = undefined;
+var g_shipPos = { left: 0, top: 0 };
+var g_overlayY = 0;
+
+var g_sounds = {
+	destroy: new Audio('./audio/pong1.wav'),
+	hit: {
+		clips: ['./audio/ping1', './audio/ping2', './audio/ping3'],
+		sfx: [],
+		cursor: 0
+	},
+	shoot: {
+		clips: ['./audio/shoot1'],
+		sfx: [],
+		cursor: 0
+	}
+};
+
+// Initialize everything when the window finishes loading
+window.addEventListener("load", function(event) {
+	
+	// position game area
+	$('#divGameArea').css('left', $(document).width()/2 - $('#divGameArea').width()/2);
+	g_gamePos = $('#divGameArea').offset();
+	$('#divGameArea').css('visibility', 'visible');
+
+	// position ship
+	g_shipPos.top = $('#divGameArea').height() - 100;
+	g_shipPos.left = $('#divGameArea').width()/2 - $('#imgShip').width()/2;
+	$('#imgShip').css('top', g_shipPos.top);
+	$('#imgShip').css('left', g_shipPos.left);
+
+	// find current language
+	g_wordLang = urlParam('lang') || g_wordLang;
+	g_uiLang = urlParam('ui') || g_uiLang;
+
+	// load our strings
+	$.ajax({
+		url: g_GAMEDEFS.langFile,
+		type: 'GET',
+		dataType: 'jsonp',
+		jsonpCallback: 'jsonCallback',
+		async: false,
+		success: function(respData) {
+			g_translations.langs = ['enUS'];
+			for (var i=0;i<respData.columns.length;i++) {
+				if (respData.columns[i].indexOf('text(TRANS,') == 0) {
+					var lang = respData.columns[i].substr('text(TRANS,'.length, 4);
+					g_translations.langs.push(lang);
+					g_translations[lang] = { index: i, UI: {}, words: [] };
+				}
+				else if (respData.columns[i] == 'text') {
+					g_translations.enUS.index = i;
+				}
+				else if (respData.columns[i] == 'identifier') {
+					g_translations.indentifierIndex = i;
+				}
+			}
+			for (var i=0;i<respData.data.length;i++) {
+				var identifier = respData.data[i][g_translations.indentifierIndex];
+				for (var j=0;j<g_translations.langs.length;j++) {
+					if (identifier.indexOf('UI_') == 0) {
+						g_translations[g_translations.langs[j]].UI[identifier] = respData.data[i][g_translations[g_translations.langs[j]].index];
+					}
+					else {
+						g_translations[g_translations.langs[j]].words.push(respData.data[i][g_translations[g_translations.langs[j]].index]);
+					}
+				}
+			}
+			
+			// load UI options
+			for (var i=0;i<g_translations.langs.length;i++) {
+				var lang = g_translations.langs[i];
+				$('#tbLangs').append('<tr><td><a onclick="location.href=\'' + location.protocol + '//' + location.host + location.pathname + '?ui=' + lang + '&lang=' + g_wordLang
+					+ '\'" style="cursor: pointer"><div class="flag flag-' + lang.substring(2).toLowerCase() + '" style="display: inline-block; position: relative;"></div>&nbsp;' + lang + '</a></td>'
+					+ '<td><a onclick="location.href=\'' + location.protocol + '//' + location.host + location.pathname + '?lang=' + lang + '&ui=' + g_uiLang
+					+ '\'" style="cursor: pointer"><div class="flag flag-' + lang.substring(2).toLowerCase() + '" style="display: inline-block; position: relative;"></div>&nbsp;' + lang + '</a></td></tr>');
+			}
+			
+			initGame();
+		}
+	});
+});
+
+function initGame() {
+	$('#divOverlay').width($('#divGameArea').width());
+	$('#divOverlay').height($('#divGameArea').height());
+	$('#divOverlay').css('left', 0);
+	g_overlayY = $('#divGameArea').height() * g_GAMEDEFS.overlayOrigin;
+	$('#divOverlay').css('top', g_overlayY - $('#divGameArea').height());
+	
+	$('#divGameOver').html(getString('UI_GAMEOVER') + '<br><a onclick="location.reload()" style="cursor: pointer;">' + getString('UI_RESTART') + '</a>');
+	$('#divGameOver').css('top', g_gamePos.top + $('#divGameArea').height()/2 - $('#divGameOver').height()/2);
+	$('#divGameOver').css('left', g_gamePos.left + $('#divGameArea').width()/2 - $('#divGameOver').width()/2);
+	
+	
+
+	$('#divTotalScore').html(getString('UI_SCORE') + ':');
+	$('#divTotalScore').css('top', g_gamePos.top + $('#divGameArea').height() - 50);
+	$('#divTotalScore').css('left', g_gamePos.left + $('#divGameArea').width()/2 - $('#divTotalScore').width());
+	
+	// create our word divs
+	for (var i=0;i<10;i++) {
+		g_wordCache.words.push(new GameWord(g_wordCache.words.length));
+	}
+
+	// create score texts
+	for (var i=0;i<10;i++) {
+		g_scoreCache.texts.push(new ScoreText(g_scoreCache.texts.length));
+	}
+	
+	// create projectiles
+	for (var i=0;i<15;i++) {
+		g_projCache.projectiles.push(new Projectile(g_projCache.projectiles.length));
+	}
+
+	// init audio
+	for (var i=0;i<6;i++) {
+		for (var j=0;j<g_sounds.shoot.clips.length;j++) {
+			g_sounds.shoot.sfx.push(new buzz.sound(g_sounds.shoot.clips[j], { formats: [ 'wav', 'ogg'] }));
+			g_sounds.shoot.sfx[g_sounds.shoot.sfx.length-1].setVolume(40);
+		}
+	}
+	for (var i=0;i<5;i++) {
+		g_sounds.hit.sfx[i] = [];
+		for (var j=0;j<g_sounds.hit.clips.length;j++) {
+			g_sounds.hit.sfx[i].push(new buzz.sound(g_sounds.hit.clips[j], { formats: [ 'wav', 'ogg'] }));
+		}
+	}
+	
+	// keyboard handler
+	$(document).bind('keypress', function(evt) {
+		var code = (evt.keyCode ? evt.keyCode : evt.which);
+		
+		if (g_activeWord) {
+			g_activeWord.typeKey(code);
+		}
+		else {
+			// make an index of active words
+			var wordIndex = [];
+			for (var i=0;i<g_wordCache.words.length;i++) {
+				if (g_wordCache.words[i].active) {
+					wordIndex.push({ idx: i, top: g_wordCache.words[i].pos.top }); 
+				}
+			}
+			wordIndex.sort(sortWordIndex);
+			var bFound = false;
+			for (var i=0;i<wordIndex.length && !bFound;i++) {
+				bFound = g_wordCache.words[wordIndex[i].idx].typeKey(code);
+			}
+		}
+	});
+	
+	// init score
+	addScore(0);
+
+	// start the game
+	(function animloop(){
+		requestAnimFrame(animloop);
+		doGameLoop();
+	})();
+	
+};
+
+function getString(id) {
+	// return the translated string, or the id if no translation
+	return g_translations[g_uiLang].UI[id] ? g_translations[g_uiLang].UI[id] : id;
+}
+
+function sortWordIndex(a, b) {
+	return b.top - a.top;
+}
+
+function urlParam(name) {
+	var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	if (results==null) {
+		return null;
+	} 
+	else {
+		return results[1] || 0;
+	}	
+}
+
+// shim layer with setTimeout fallback
+window.requestAnimFrame = (function(){
+  return  window.requestAnimationFrame       ||
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame    ||
+          function( callback ){
+            window.setTimeout(callback, 1000 / 60);
+          };
+})();
+
+		
+function GameWord(id) {
+	
+	var self = this;
+	self.id = id;
+	self.speed = 0;
+	self.pos = { left: 0, top: 0 };
+	self.word = 'test';
+	self.cursor = 0;
+	
+	$('#divGameArea').append('<div class="gameWord gameWordOrig" id="gameWordOrig_' + self.id + '"></div>');
+	$('#divGameArea').append('<div class="flag flag-' + g_wordLang.substring(2).toLowerCase() + '" id="gameFlag_' + self.id + '"></div>');
+	$('#divGameArea').append('<div class="gameWord" id="gameWord_' + self.id + '"></div>');
+	$('#divGameArea').append('<div class="gameWord gameWordOver" id="gameWordOver_' + self.id + '"></div>');
+	self.$div = $('#gameWord_' + self.id);
+	self.$divFlag = $('#gameFlag_' + self.id);
+	self.$divOrig = $('#gameWordOrig_' + self.id);
+	self.$divOver = $('#gameWordOver_' + self.id);
+
+	self.addToPlay = function(newSpeed, newWord, newTrans) {
+		g_wordCache.cursor = (g_wordCache.cursor + 1) % g_wordCache.words.length;
+		self.hideAll();
+		
+		self.tripped = false;
+		self.word = newWord;
+		self.hits = newWord.length;
+		self.trans = newTrans;
+		self.$divOver.html('');
+		self.$divOrig.html(newTrans);
+		self.cursor = 0;
+		self.topSpeed = newSpeed;
+		self.curSpeed = -0.3;
+		self.pos.left = Math.floor((32 + $('#divGameArea').width()-96) * Math.random());
+		self.pos.top = 32;
+
+		self.$div.html(self.word);
+		self.$div.css('top', self.pos.top);
+		self.$div.css('left', self.pos.left);
+		self.$divOrig.css('left', self.pos.left + self.$div.width()/2 - self.$divOrig.width()/2);
+		self.$divFlag.css('left', self.pos.left + self.$div.width()/2 - self.$divFlag.width()/2);
+		self.$divOver.css('left', self.pos.left);
+		
+		self.move();
+		self.$div.show();
+		self.$divOrig.show();
+		self.$divFlag.show();
+		self.$divOver.show();
+		
+		self.active = true;
+
+	};
+	
+	self.hideAll = function() {
+		self.$div.hide();
+		self.$divOrig.hide();
+		self.$divFlag.hide();
+		self.$divOver.hide();
+	};
+	
+	self.removeFromPlay = function() {
+		self.active = false;
+		self.hideAll();
+		if (g_activeWord == self) {
+			g_activeWord = undefined;
+		}
+	};
+	
+	self.takeHit = function() {
+		self.hits--;
+		addScore(self.word.length);
+		if (self.hits <= 0) {
+			var bonus = self.tripped ? 1 : 2;
+			g_score += bonus * g_GAMEDEFS.scoreWord;
+			g_scoreCache.texts[g_scoreCache.cursor].display(self, g_GAMEDEFS.scoreWord, bonus);
+			g_sounds.destroy.play();
+			self.removeFromPlay();
+		}
+		else {
+			g_sounds.hit.sfx[g_sounds.hit.cursor][Math.floor(g_sounds.hit.sfx[g_sounds.hit.cursor].length * Math.random())].play();
+			g_sounds.hit.cursor = (g_sounds.hit.cursor + 1) % g_sounds.hit.sfx.length;
+			self.curSpeed = 0 - g_GAMEDEFS.knockback;
+		}
+	};
+	
+	self.typeKey = function(code) {
+		if (code == self.word.charCodeAt(self.cursor)) {
+			// shoot projectile at me
+			g_projCache.projectiles[g_projCache.cursor].addToPlay(self);
+			g_sounds.shoot.sfx[g_sounds.shoot.cursor].play();
+			g_sounds.shoot.cursor = (g_sounds.shoot.cursor + 1) % g_sounds.shoot.sfx.length;
+			
+			self.cursor++;
+			self.$divOver.html(self.word.substring(0, self.cursor));
+			
+			g_activeWord = self;
+			if (self.cursor >= self.word.length) {
+				g_activeWord = undefined;
+			}
+			
+			return true;
+		}
+		return false;
+	};
+	
+	self.move = function() {
+		if (!self.active) {
+			return;
+		}	
+		if (self.curSpeed != self.topSpeed) {
+			self.curSpeed = Math.min(self.topSpeed, self.curSpeed + g_GAMEDEFS.gravity);
+		}
+		self.pos.top += self.curSpeed;
+		if (self.pos.top > g_shipPos.top) {
+			//self.removeFromPlay();
+			runGameOver();
+		}
+		else if (!self.tripped && self.pos.top > g_overlayY) {
+			self.tripped = true;
+			g_overlayY += g_GAMEDEFS.overlayMove;
+			$('#divOverlay').css('top', g_overlayY - $('#divGameArea').height());
+		}
+		self.$div.css('top', self.pos.top);
+		self.$divOver.css('top', self.pos.top);
+		self.$divOrig.css('top', self.pos.top - 26);
+		self.$divFlag.css('top', self.pos.top - 8);
+	};
+	
+	return self;
+}		
+
+var ScoreText = function(id) {
+	
+	var self = this;
+
+	$('#divGameArea').append('<span id="scoreText_' + self.id + '" class="scoreText" />');
+	self.$text = $('#scoreText_' + self.id);
+	
+	self.display = function(target, amt, bonus) {
+		g_scoreCache.cursor = (g_scoreCache.cursor + 1) % g_scoreCache.texts.length;
+		clearTimeout(self.showTimer);
+		
+		self.$text.html( (bonus == 1 ? '' : bonus + 'x&nbsp;') + (bonus * amt));
+		self.$text.css('left', target.pos.left + target.$div.width()/2 - self.$text.width()/2);
+		self.$text.css('top', target.pos.top - 8);
+		self.$text.show();
+		self.showTimer = setTimeout(function() { self.$text.hide(); }, g_GAMEDEFS.timeShowScore);
+		
+	};
+
+	return self;
+};
+		
+var Projectile = function(id) {
+	
+	var self = this;
+	
+	self.speed = g_GAMEDEFS.projSpeed;
+	self.id = id;
+	self.pos = { left: 0, top: 0 };
+	$('#divGameArea').append('<img id="gameImg_' + self.id + '" src="./images/proj.png" style="width: 9px, height: 9px; display: none; position: absolute;" />');
+	self.$img = $('#gameImg_' + self.id);
+	
+	self.addToPlay = function(newTarget) {
+		g_projCache.cursor = (g_projCache.cursor + 1) % g_projCache.projectiles.length;
+		
+		self.target = newTarget;
+		self.used = false;
+		
+		self.pos.left = g_shipPos.left + 32/2 - 9/2;
+		self.pos.top = g_shipPos.top;
+		self.$img.css('left', self.pos.left);
+		self.$img.css('top', self.pos.top);
+
+		// where will target be when I reach it?
+		var locY = self.target.pos.top - Math.ceil((self.pos.top - self.target.pos.top)/self.speed) * self.target.speed;
+		var dx = (self.target.pos.left + self.target.cursor*g_GAMEDEFS.letterWidth) - self.pos.left;
+		var dy = locY - self.pos.top;
+		self.angle = Math.atan2(-dy, -dx);
+		$('#imgShip').css('transform', 'rotate(' + (self.angle - Math.PI/2) + 'rad)');
+		
+		self.$img.show();
+		self.active = true;
+	};
+	
+	self.move = function() {
+		if (!self.active) {
+			return;
+		}
+		self.pos.top -= self.speed * Math.sin(self.angle);
+		self.pos.left -= self.speed * Math.cos(self.angle);
+		if (!self.used && self.pos.top <= self.target.pos.top) {
+			self.target.takeHit();
+			self.angle = 9*Math.PI/8 + 3*Math.PI/4 * Math.random();
+			self.used = true;
+			//self.removeFromPlay();
+		}
+		else {
+			self.$img.css('top', self.pos.top);
+			self.$img.css('left', self.pos.left);
+		}
+	
+	};
+	
+	self.removeFromPlay = function() {
+	
+		self.$img.hide();
+		self.active = false;
+	}
+	
+	return self;
+};		
+		
+function addScore(amt) {
+
+	g_score += amt;
+	$('#divTotalScore').html(getString('UI_SCORE') + ':&nbsp;' + g_score);
+
+}		
+		
+function runGameOver() {
+	window.g_gameOver = true;
+	$('#divGameOver').show();
+};		
+		
+function doGameLoop() {
+	if (window.g_gameOver) {
+		return;
+	}
+
+	for (var i=0;i<g_wordCache.words.length;i++) {
+		g_wordCache.words[i].move();
+	}
+	for (var i=0;i<g_projCache.projectiles.length;i++) {
+		g_projCache.projectiles[i].move();
+	}
+	
+	if (Math.random() < g_GAMEDEFS.spawnRate) {
+		//var loc = Math.floor(g_wordList.words.length * Math.random());
+		//g_wordCache.words[g_wordCache.cursor].addToPlay(0.5 + g_GAMEDEFS.wordSpeed * Math.random(), g_wordList.words[loc], g_wordList.trans[g_wordLang][loc]);
+		var loc = Math.floor(g_translations.enUS.words.length * Math.random());
+		g_wordCache.words[g_wordCache.cursor].addToPlay(0.5 + g_GAMEDEFS.wordSpeed * Math.random(), g_translations[g_uiLang].words[loc], g_translations[g_wordLang].words[loc]);
+	}
+
+}
+		
+		
+		</script>
+	</head>
+	
+	<body>
+		<div id="divGameArea">
+			<div id="divOverlay"></div>
+			<img id="imgShip" src="./images/ship.png" style="position: absolute; width: 32px, height: 32px" />
+		</div>
+		<div id="divTotalScore"></div>
+		<div id="divGameOver">
+			
+		</div>
+
+		Languages:<br><br>
+		<table>
+			<thead>
+				<th align="center" width="100">UI</th>
+				<th align="center" width="100">Game Words</th>
+			</thead>
+			<tbody id="tbLangs"></tbody>
+		</table>
+	</body>
+</html>

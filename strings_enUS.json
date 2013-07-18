@@ -1,0 +1,353 @@
+﻿jsonCallback(
+{
+  "columns": ["identifier", "text", "text(TRANS,frFR)", "text(TRANS,itIT)", "text(TRANS,deDE)", "text(TRANS,esES)", "text(TRANS,svSE)"],
+  "data": [
+    [
+"UI_SCORE", "Score", "Scores", "Punteggio", "Punke", "Puntuaciones", "Poäng"],
+    [
+"UI_GAMEOVER", "Game Over", "Game Over", "Game Over", "Spiel Verloren", "Fin Del Juego", "Spel Slut"],
+    [
+"UI_RESTART", "Replay", "Rejouer", "Rigioca", "Wiederholen", "Volver a Jugar", "Starta Om"],
+    [
+"Easy", "easy", "facile", "facile", "leicht", "fácil", null],
+    [
+"Normal", "normal", "normal", "normale", "normal", "normal", null],
+    [
+"Hard", "hard", "difficile", "difficile", "schwer", "difícil", null],
+    [
+"Next", "next", "suivant", "successivo", "nächster", "siguiente", null],
+    [
+"Score", "score", "scores", "punteggio", "punkte/punktestand", "puntuaciones", null],
+    [
+"Lives", "lives", "vies", "vite", "leben", "vidas", null],
+    [
+"Time", "time", "temps", "tempo", "zeit", "tiempo", null],
+    [
+"Orange", "orange", "orange", "arancione", "orange", "naranja", null],
+    [
+"Red", "red", "rouge", "rosso", "rot", "rojo", null],
+    [
+"Blue", "blue", "bleu", "blu", "blau", "azul", null],
+    [
+"Green", "green", "vert", "verde", "grün", "verde", null],
+    [
+"Yellow", "yellow", "jaune", "giallo", "gelb", "amarillo", null],
+    [
+"White", "white", "blanc", "bianco", "weiß", "blanco", null],
+    [
+"Black", "black", "noir", "nero", "schwarz", "negro", null],
+    [
+"Gray", "gray", "gris", "grigio", "grau", "gris", null],
+    [
+"Gold", "gold", "orange", "oro", "gold", "oro", null],
+    [
+"Silver", "silver", "argent", "argento", "silber", "plata", null],
+    [
+"Bronze", "bronze", "bronze", "bronzo", "bronze", "bronce", null],
+    [
+"Clear", "clear", "transparent", "chiaro", "klar / durchsichtig", "claro", null],
+    [
+"Jump", "jump", "sauter", "salta", "springen", "saltar", null],
+    [
+"Bounce", "bounce", "rebondir", "rimbalza", "hüpfen", "balancear", null],
+    [
+"Heal", "heal", "soigner", "cura", "heilen", "curar", null],
+    [
+"Shoot", "shoot", "tirer", "spara", "schießen", "disparar", null],
+    [
+"Collect", "collect", "collecter", "raccogli", "einsammeln", "recolectar", null],
+    [
+"Capture", "capture", "capturer", "cattura", "einnehmen", "capturar", null],
+    [
+"Destroy", "destroy", "détruire", "distruggi", "zerstören", "destruir", null],
+    [
+"Attack", "attack", "attaquer", "attacca", "angreifen", "atacar", null],
+    [
+"Defend", "defend", "défendre", "difendi", "verteidigen", "defender", null],
+    [
+"Hit", "hit", "toucher", "colpisci", "schlagen", "golpear", null],
+    [
+"Kick", "kick", "taper", "calcia", "treten", "patear", null],
+    [
+"Move", "move", "se déplacer", "muoviti", "bewegen", "mover", null],
+    [
+"Run", "run", "courir", "corri", "laufen", "correr", null],
+    [
+"Walk", "walk", "marcher", "cammina", "gehen", "caminar", null],
+    [
+"Skip", "skip", "passer", "scartare", "überspringen", "pasar", null],
+    [
+"fuel", "fuel", "carburant", "benzina\\ncarburante", "sprit/benzin", "combustible", null],
+    [
+"oil", "oil", "huile", "olio", "öl", "aceite", null],
+    [
+"gear", "gear", "transmission", "cambio\\nmarcia", "gang", "equipo", null],
+    [
+"tire", "tire", "pneu", "pneumatico", "reifen", "neumático", null],
+    [
+"wheel", "wheel", "roue", "ruota", "rad", "rueda", null],
+    [
+"clutch", "clutch", "embrayage", "frizione", "kupplung", "embrague", null],
+    [
+"light", "light", "feu", "luce", "licht", "luz", null],
+    [
+"Male", "male", "homme", "uomo", "mann", "hombre", null],
+    [
+"Woman", "woman", "femme", "donna", "frau", "mujer", null],
+    [
+"Youth", "youth", "enfance", "giovane", "jugendlicher", "joven", null],
+    [
+"Adult", "adult", "adulte", "adulto", "erwachsener", "adulto", null],
+    [
+"Children", "children", "enfant", "bambino", "kind", "niño", null],
+    [
+"Boy", "boy", "garçon", "ragazzo", "junge", "chico", null],
+    [
+"Girl", "girl", "fille", "ragazza", "mädchen", "chica", null],
+    [
+"Father", "father", "père", "papà", "vater", "padre", null],
+    [
+"Mother", "mother", "mère", "mamma", "mutter", "madre", null],
+    [
+"Brother", "brother", "frère", "fratello", "bruder", "hermano", null],
+    [
+"Sister", "sister", "soeur", "sorella", "schwester", "hermana", null],
+    [
+"Child", "child", "enfant", "bambino", "kind", "niño", null],
+    [
+"Son", "son", "fils", "figlio", "sohn", "hijo", null],
+    [
+"Daughter", "daughter", "fille", "figlia", "tochter", "hija", null],
+    [
+"Uncle", "uncle", "oncle", "zio", "onkel", "tío", null],
+    [
+"Aunt", "aunt", "tante", "zia", "tante", "tía", null],
+    [
+"Friend", "friend", "ami", "amico", "freund", "amigos", null],
+    [
+"animal", "animal", "animal", "animale", "tier", null, null],
+    [
+"Human", "human", "humain", "umano", "mensch", "humano", null],
+    [
+"Dog", "dog", "chien", "cane", "hund", "perro", null],
+    [
+"Cat", "cat", "chat", "gatto", "katze", "gato", null],
+    [
+"Puppy", "puppy", "chiot", "cucciolo", "welpe", "cachorro", null],
+    [
+"Kitten", "kitten", "chaton", "gattino", "katzenjunges", "gatito", null],
+    [
+"Rat", "rat", "rat", "topo", "ratte", "rata", null],
+    [
+"Squirrel", "squirrel", "écureuil", "scoiattolo", "eichhörnchen", "ardilla", null],
+    [
+"Cattle", "cattle", "troupeau", "bestiame", "vieh", "ganado", null],
+    [
+"Pig", "pig", "cochon", "maiale", "schwein", "cerdo", null],
+    [
+"Wolf", "wolf", "loup", "lupo", "wolf", "lobo", null],
+    [
+"Bear", "bear", "ours", "orso", "bär", "oso", null],
+    [
+"Panda", "panda", "panda", "panda", "panda", "panda", null],
+    [
+"Bat", "bat", "chauve-souris", "pipistrello", "fledermaus", "murciélago", null],
+    [
+"Tiger", "tiger", "tigre", "tigre", "tiger", "tigre", null],
+    [
+"Lion", "lion", "lion", "leone", "löwe", "león", null],
+    [
+"Panther", "panther", "pantère", "pantera", "panther", "pantera", null],
+    [
+"Fox", "fox", "renard", "volpe", "fuchs", "zorro", null],
+    [
+"Horse", "horse", "cheval", "cavallo", "pferd", "caballo", null],
+    [
+"Deer", "deer", "daim", "cervo", "hirsch", "ciervo", null],
+    [
+"Zebra", "zebra", "zèbre", "zebra", "zebra", "cebra", null],
+    [
+"Camel", "camel", "chameau", "cammello", "kamel", "camello", null],
+    [
+"Ass", "ass", "âne", "asino", "esel", "asno", null],
+    [
+"Giraffe", "giraffe", "girafe", "giraffa", "giraffe", "jirafa", null],
+    [
+"Elephant", "elephant", "éléphant", "elefante", "elefant", "elefante", null],
+    [
+"Mammoth", "mammoth", "mammouth", "mammuth", "mammut", "mamut", null],
+    [
+"Monkey", "monkey", "singe", "scimmia", "affe", "mono", null],
+    [
+"Gorilla", "gorilla", "gorille", "gorilla", "gorilla", "gorila", null],
+    [
+"Koala", "koala", "koala", "koala", "koala", "koala", null],
+    [
+"Kangaroo", "kangaroo", "kangourou", "canguro", "känguruh", "canguro", null],
+    [
+"Sloth", "sloth", "paresseux", "bradipo", "faultier", "perezoso", null],
+    [
+"Cow", "cow", "vache", "mucca", "kuh", "vaca", null],
+    [
+"Birds", "birds", "oiseaux", "uccelli", "vögel", "pajaros", null],
+    [
+"Sparrow", "sparrow", "mésange", "passero", "spatz", "gorrión", null],
+    [
+"Crow", "crow", "corbeau", "corvo", "krähe", "cuervo", null],
+    [
+"Penguin", "penguin", "pingouin", "pinguino", "pinguin", "pinguino", null],
+    [
+"Hawk", "hawk", "faucon", "falco", "falke", "halcón", null],
+    [
+"Eagle", "eagle", "aigle", "aquila", "adler", "águila", null],
+    [
+"Condor", "condor", "condor", "condor", "kondor", "cóndor", null],
+    [
+"Swan", "swan", "cygne", "cigno", "schwan", "cisne", null],
+    [
+"Insect", "insect", "insecte", "insetto", "insekt", "insecto", null],
+    [
+"Butterfly", "butterfly", "papillon", "farfalla", "schmetterling", "mariposa", null],
+    [
+"Beetle", "beetle", "coléoptère", "scarafaggio", "käfer", "escarabajo", null],
+    [
+"Mosquito", "mosquito", "moustique", "mosca", "moskito", "mosquito", null],
+    [
+"Ladybug", "ladybug", "coccinelle", "coccinella", "marienkäfer", "mariquita", null],
+    [
+"Spider", "spider", "araignée", "ragno", "spinne", "araña", null],
+    [
+"Fish", "fish", "poisson", "pesce", "fisch", "pez", null],
+    [
+"Shark", "shark", "requin", "squalo", "hai", "tiburón", null],
+    [
+"Whale", "whale", "baleine", "balena", "wal", "ballena", null],
+    [
+"Dolphin", "dolphin", "dauphin", "delfino", "delfin", "delfín", null],
+    [
+"Octopus", "octopus", "poulpe", "polpo", "oktopus", "pulpo", null],
+    [
+"Squid", "squid", "calamar", "calamaro", "krake", "calamar", null],
+    [
+"Reptiles", "reptiles", "reptiles", "rettili", "reptilien", "reptiles", null],
+    [
+"Gator", "gator", "crocodile", "coccodrillo", "aligator", "gator", null],
+    [
+"Lizard", "lizard", "lézard", "lucertola", "echse", "lagarto", null],
+    [
+"Newt", "newt", "triton", "tritone", "salamander", "tritón", null],
+    [
+"Gecko", "gecko", "gecko", "geco", "gecko", "geco", null],
+    [
+"Snake", "snake", "serpent", "serpente", "schlange", "serpiente", null],
+    [
+"Turtle", "turtle", "tortue", "tartaruga", "schildkröte", "totuga", null],
+    [
+"Food", "food", "nourriture", "cibo", "nahrung", null, null],
+    [
+"Cooking", "cooking", "cuisson", "cucinare", "kochen", null, null],
+    [
+"Pan", "pan", "poêle", "padella", "pfanne", null, null],
+    [
+"Pot", "pot", "casserole", "pentola", "topf", null, null],
+    [
+"Rice", "rice", "riz", "riso", "reis", null, null],
+    [
+"Soup", "soup", "soupe", "zuppa", "suppe", null, null],
+    [
+"Meat", "meat", "viande", "carne", "fleisch", null, null],
+    [
+"Vegetables", "vegetables", "légumes", "verdura", "gemüse", null, null],
+    [
+"Water", "water", "eau", "acqua", "wasser", null, null],
+    [
+"Milk", "milk", "lait", "latte", "milch", null, null],
+    [
+"Coffee", "coffee", "café", "caffè", "kaffee", null, null],
+    [
+"Tea", "tea", "thé", "tè", "tee", null, null],
+    [
+"Knife", "knife", "couteau", "coltello", "messer", null, null],
+    [
+"Spoon", "spoon", "cuillère", "cucchaio", "löffel", null, null],
+    [
+"Fork", "fork", "fouchette", "forchetta", "gabel", null, null],
+    [
+"Dish", "dish", "plat", "piatto", "geschirr", null, null],
+    [
+"Cup", "cup", "coupe", "tazza", "becher", null, null],
+    [
+"Iron", "iron", "fer", "ferro", "eisen", "hierro", null],
+    [
+"Steel", "steel", "acier", "acciaio", "stahl", "acero", null],
+    [
+"Crystal", "crystal", "crystal", "cristallo", "kristall", "cristal", null],
+    [
+"Marble", "marble", "marbre", "marmo", "marmor", "mármol", null],
+    [
+"Vehicle", "vehicle", "véhicule", "veicolo", "fahrzeug", null, null],
+    [
+"Car", "car", "voiture", "automobile", "auto", null, null],
+    [
+"Bike", "bike", "moto", "moto", "motorrad", null, null],
+    [
+"Bicycle", "bicycle", "vélo", "bicicletta", "fahrrad", null, null],
+    [
+"Plane", "plane", "avion", "aeroplano", "flugzeug", null, null],
+    [
+"Shell", "shell", "coquille", "conchiglia", "schale", "concha", null],
+    [
+"Desert", "desert", "désert", "deserto", "wüste", "desierto", null],
+    [
+"Sand", "sand", "sable", "sabbia", "sand", "arena", null],
+    [
+"Stone", "stone", "pierre", "pietra", "stein", "roca", null],
+    [
+"Rock", "rock", "caillou", "roccia", "fels", "piedra", null],
+    [
+"Mud", "mud", "boue", "fango", "schlamm", "barro", null],
+    [
+"Plant", "plant", "plante", "pianta", "pflanze", "planta", null],
+    [
+"Flower", "flower", "fleur", "fiore", "blume", "flor", null],
+    [
+"Grass", "grass", "herbe", "erba", "gras", "hierba", null],
+    [
+"Tree", "tree", "arbre", "albero", "baum", "árbol", null],
+    [
+"Stem", "stem", "tronc", "stelo", "stamm", null, null],
+    [
+"Root", "root", "racine", "radice", "wurzel", null, null],
+    [
+"Fruit", "fruit", "fruit", "frutta", "frucht", "fruta", null],
+    [
+"Air", "air", "air", "aria", "luft", "aire", null],
+    [
+"Sky", "sky", "ciel", "cielo", "himmel", "cielo", null],
+    [
+"Wind", "wind", "vent", "vento", "wind", "viento", null],
+    [
+"Shine", "shine", "briller", "chiaro", "scheinen", "brillo", null],
+    [
+"Cloud", "cloud", "nuage", "nuvola", "wolke", "nube", null],
+    [
+"Rain", "rain", "plue", "pioggia", "regen", "lluvia", null],
+    [
+"Thunder", "thunder", "tonnerre", "tuono", "donner", "trueno", null],
+    [
+"Fog", "fog", "brouillard", "nebbia", "nebel", "niebla", null],
+    [
+"Haze", "haze", "brume", "foschia", "dunst", "neblina", null],
+    [
+"Snow", "snow", "neige", "neve", "schnee", "nieve", null],
+    [
+"Sleet", "sleet", "neige fondue", "nevischio", "schneeregen", "aguanieve", null],
+    [
+"Hail", "hail", "grêle", "grandine", "hagel", "granizo", null],
+    [
+"Storm", "storm", "tempète", "tempesta", "sturm", "tormenta", null],
+    [
+"Sun", "sun", "soleil", "sole", "sonne", "sol", null]
+  ]
+}
+);
