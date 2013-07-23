@@ -125,7 +125,7 @@
     [
 "Friend", "friend", "ami", "amico", "freund", "amigos", null],
     [
-"animal", "animal", "animal", "animale", "tier", null, null],
+"animal", "animal", "animal", "animale", "tier", "animal", null],
     [
 "Human", "human", "humain", "umano", "mensch", "humano", null],
     [
@@ -168,8 +168,6 @@
 "Zebra", "zebra", "zèbre", "zebra", "zebra", "cebra", null],
     [
 "Camel", "camel", "chameau", "cammello", "kamel", "camello", null],
-    [
-"Ass", "ass", "âne", "asino", "esel", "asno", null],
     [
 "Giraffe", "giraffe", "girafe", "giraffa", "giraffe", "jirafa", null],
     [
@@ -243,39 +241,39 @@
     [
 "Turtle", "turtle", "tortue", "tartaruga", "schildkröte", "totuga", null],
     [
-"Food", "food", "nourriture", "cibo", "nahrung", null, null],
+"Food", "food", "nourriture", "cibo", "nahrung", "comida", null],
     [
-"Cooking", "cooking", "cuisson", "cucinare", "kochen", null, null],
+"Cooking", "cooking", "cuisson", "cucinare", "kochen", "cocción", null],
     [
-"Pan", "pan", "poêle", "padella", "pfanne", null, null],
+"Pan", "pan", "poêle", "padella", "pfanne", "sartén", null],
     [
-"Pot", "pot", "casserole", "pentola", "topf", null, null],
+"Pot", "pot", "casserole", "pentola", "topf", "olla", null],
     [
-"Rice", "rice", "riz", "riso", "reis", null, null],
+"Rice", "rice", "riz", "riso", "reis", "arroz", null],
     [
-"Soup", "soup", "soupe", "zuppa", "suppe", null, null],
+"Soup", "soup", "soupe", "zuppa", "suppe", "sopa", null],
     [
-"Meat", "meat", "viande", "carne", "fleisch", null, null],
+"Meat", "meat", "viande", "carne", "fleisch", "carne", null],
     [
-"Vegetables", "vegetables", "légumes", "verdura", "gemüse", null, null],
+"Vegetables", "vegetables", "légumes", "verdura", "gemüse", "verduras", null],
     [
-"Water", "water", "eau", "acqua", "wasser", null, null],
+"Water", "water", "eau", "acqua", "wasser", "agua", null],
     [
-"Milk", "milk", "lait", "latte", "milch", null, null],
+"Milk", "milk", "lait", "latte", "milch", "leche", null],
     [
-"Coffee", "coffee", "café", "caffè", "kaffee", null, null],
+"Coffee", "coffee", "café", "caffè", "kaffee", "café", null],
     [
-"Tea", "tea", "thé", "tè", "tee", null, null],
+"Tea", "tea", "thé", "tè", "tee", "té", null],
     [
-"Knife", "knife", "couteau", "coltello", "messer", null, null],
+"Knife", "knife", "couteau", "coltello", "messer", "cuchillo", null],
     [
-"Spoon", "spoon", "cuillère", "cucchaio", "löffel", null, null],
+"Spoon", "spoon", "cuillère", "cucchaio", "löffel", "cuchara", null],
     [
-"Fork", "fork", "fouchette", "forchetta", "gabel", null, null],
+"Fork", "fork", "fouchette", "forchetta", "gabel", "tenedor", null],
     [
-"Dish", "dish", "plat", "piatto", "geschirr", null, null],
+"Dish", "dish", "plat", "piatto", "geschirr", "plato", null],
     [
-"Cup", "cup", "coupe", "tazza", "becher", null, null],
+"Cup", "cup", "coupe", "tazza", "becher", "copa", null],
     [
 "Iron", "iron", "fer", "ferro", "eisen", "hierro", null],
     [
@@ -285,15 +283,15 @@
     [
 "Marble", "marble", "marbre", "marmo", "marmor", "mármol", null],
     [
-"Vehicle", "vehicle", "véhicule", "veicolo", "fahrzeug", null, null],
+"Vehicle", "vehicle", "véhicule", "veicolo", "fahrzeug", "vehículo", null],
     [
-"Car", "car", "voiture", "automobile", "auto", null, null],
+"Car", "car", "voiture", "automobile", "auto", "auto", null],
     [
-"Bike", "bike", "moto", "moto", "motorrad", null, null],
+"Bike", "bike", "moto", "moto", "motorrad", "bici", null],
     [
-"Bicycle", "bicycle", "vélo", "bicicletta", "fahrrad", null, null],
+"Bicycle", "bicycle", "vélo", "bicicletta", "fahrrad", "bicicleta", null],
     [
-"Plane", "plane", "avion", "aeroplano", "flugzeug", null, null],
+"Plane", "plane", "avion", "aeroplano", "flugzeug", "avión", null],
     [
 "Shell", "shell", "coquille", "conchiglia", "schale", "concha", null],
     [
@@ -315,9 +313,9 @@
     [
 "Tree", "tree", "arbre", "albero", "baum", "árbol", null],
     [
-"Stem", "stem", "tronc", "stelo", "stamm", null, null],
+"Stem", "stem", "tronc", "stelo", "stamm", "tallo", null],
     [
-"Root", "root", "racine", "radice", "wurzel", null, null],
+"Root", "root", "racine", "radice", "wurzel", "hierro", null],
     [
 "Fruit", "fruit", "fruit", "frutta", "frucht", "fruta", null],
     [

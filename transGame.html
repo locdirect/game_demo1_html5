@@ -1,7 +1,9 @@
+<!doctype html>
 <html>
 	<head>
 		<script type="text/javascript" src="./includes/jquery-1.10.2.min.js"></script>
 		<script type="text/javascript" src="./includes/buzz.js"></script>
+		<title>InterpreType - Localize Direct</title>
 		
 		<link href="./flags.css" rel="stylesheet">
 		
@@ -31,6 +33,10 @@
 			#divTotalScore {
 				position: absolute;
 				font-size: 1.6em;
+			}
+			
+			.gameTitle {
+				color: #D8B400;
 			}
 			
 			#divOverlay {
@@ -204,7 +210,7 @@ function initGame() {
 	
 
 	$('#divTotalScore').html(getString('UI_SCORE') + ':');
-	$('#divTotalScore').css('top', g_gamePos.top + $('#divGameArea').height() - 50);
+	$('#divTotalScore').css('top', g_gamePos.top + $('#divGameArea').height() - 60);
 	$('#divTotalScore').css('left', g_gamePos.left + $('#divGameArea').width()/2 - $('#divTotalScore').width());
 	
 	// create our word divs
@@ -516,7 +522,7 @@ var Projectile = function(id) {
 function addScore(amt) {
 
 	g_score += amt;
-	$('#divTotalScore').html(getString('UI_SCORE') + ':&nbsp;' + g_score);
+	$('#divTotalScore').html(getString('UI_SCORE') + ':&nbsp;' + g_score + '<br><b class="gameTitle">InterpreType</b>');
 
 }		
 		
@@ -560,7 +566,8 @@ function doGameLoop() {
 			
 		</div>
 
-		Languages:<br><br>
+		<a href="http://www.localizedirect.com"><img src="./images/LD_200px_shadow.png" /></a><br>
+		<br>
 		<table>
 			<thead>
 				<th align="center" width="100">UI</th>
